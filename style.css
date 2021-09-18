@@ -1,0 +1,35 @@
+.calculator
+{
+    height: 350px;
+    width: 270px;
+    margin-left: 20%;
+    border: 3px solid black;
+}
+.display h1
+{
+    padding: 5px;
+    margin: 10px;
+    border: 2px solid black;
+    height: 60px;
+    background-color: silver;
+    text-align: end;
+    overflow: auto;
+}
+.calculator ul li
+{
+    height: 25px;
+    width: 15px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 22px;
+    list-style: none;
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: rgba(128, 128, 128, 0.247);
+    padding: 10px;
+    margin-left: 10px;
+}
+.calculator ul
+{
+    display: flex;
+}

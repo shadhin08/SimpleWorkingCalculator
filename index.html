@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Calculator</h2>
+    <div class="container">
+        <div class="calculator">
+            <div class="display">
+                <h1 id="display">0</h1>
+            </div>
+            <div class="buttons">
+                <ul>
+                    <li id="butt7">7</li>
+                    <li id="butt8">8</li>
+                    <li id="butt9">9</li>
+                    <li id="plus">+</li>
+                </ul>
+                <ul>
+                    <li id="butt4">4</li>
+                    <li id="butt5">5</li>
+                    <li id="butt6">6</li>
+                    <li id="minus">-</li>
+                </ul>
+                <ul>
+                    <li id="butt1">1</li>
+                    <li id="butt2">2</li>
+                    <li id="butt3">3</li>
+                    <li id="multiple">*</li>
+                </ul>
+                <ul>
+                    <li id="equal">=</li>
+                    <li id="butt0">0</li>
+                    <li id="clear">c</li>
+                    <li id="divison">/</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var previousKey="e", ndPreviousKey="e", disValue, disValueNew, validKey=1;
+        function display(key) {
+            disValue=document.getElementById("display").innerText;
+            validKey=1;
+
+            if(key=="c")
+            {
+                document.getElementById("display").innerText="0";
+                validKey=0;
+                disValueNew="";
+            }
+
+
+            if(key=="=")
+            {
+                var i, j, len, value, sign, neg, res=0;
+
+                len=disValueNew.length;
+
+
+                value="", neg=0, sign="+";
+                if(disValueNew[0]=="-")
+                {
+                    neg=1;
+                }
+                for(i=0;i<=len;i++)
+                {
+                    if(disValueNew[i]>=0&&disValueNew[i]<=9)
+                    {
+                        value=value+disValueNew[i];
+                    }
+                    else
+                    {
+                        value=parseFloat(value);
+                        if(neg==1)
+                        {
+                            value=value*(-1);
+                            neg=0;
+                        }
+                        if(disValueNew[i]=="-"&&(disValueNew[i-1]=="+"||disValueNew[i-1]=="-"||disValueNew[i-1]=="*"||disValueNew[i-1]=="/"))
+                        {
+                            neg=1;
+                            continue;
+                        }
+                        if(sign=="+")
+                        {
+                            res+=value;
+                        }
+                        else if(sign=="-")
+                        {    
+                            res-=value;
+                        }
+                        else if(sign=="*")
+                        {
+                            if(res==0)
+                            {
+                                res=1;
+                            }
+                            res*=value;
+                        }
+                        else if(sign=="/")
+                        {
+                            res/=value;
+                        }
+                        sign=disValueNew[i];
+                        value="0";
+                    }
+                }
+                document.getElementById("display").innerText=res;
+                validKey=0;
+            }
+
+            if(disValue=="0")
+            {
+                disValue="";
+                if(key=="+"||key=="*"||key=="/")
+                {
+                    key="0";
+                }
+            }
+            
+            if((key=="-"&&(previousKey=="+"||previousKey=="-"||previousKey=="*"||previousKey=="/"))&&(ndPreviousKey=="+"||ndPreviousKey=="-"||ndPreviousKey=="*"||ndPreviousKey=="/"))
+            {
+                validKey=0;
+            }
+            if((key=="*"||key=="/"||key=="+")&&(previousKey=="+"||previousKey=="-"||previousKey=="*"||previousKey=="/"))
+            {
+                validKey=0;
+            }
+            if(key=="-"&&previousKey=="-"&&ndPreviousKey=="e")
+            {
+                validKey=0;
+            }
+
+            if(validKey==1)
+            {
+                disValueNew=disValue+key;
+                document.getElementById("display").innerText=disValueNew;
+
+                ndPreviousKey=previousKey;
+                previousKey = key;
+            }
+
+        }display
+
+
+        document.getElementById("butt1").addEventListener("click", function(){display("1");})
+        document.getElementById("butt2").addEventListener("click", function(){display("2");})
+        document.getElementById("butt3").addEventListener("click", function(){display("3");})
+        document.getElementById("butt4").addEventListener("click", function(){display("4");})
+        document.getElementById("butt5").addEventListener("click", function(){display("5");})
+        document.getElementById("butt6").addEventListener("click", function(){display("6");})
+        document.getElementById("butt7").addEventListener("click", function(){display("7");})
+        document.getElementById("butt8").addEventListener("click", function(){display("8");})
+        document.getElementById("butt9").addEventListener("click", function(){display("9");})
+        document.getElementById("butt0").addEventListener("click", function(){display("0");})
+        
+        document.getElementById("plus").addEventListener("click", function(){display("+");})
+        document.getElementById("minus").addEventListener("click", function(){display("-");})
+        document.getElementById("multiple").addEventListener("click", function(){display("*");})
+        document.getElementById("divison").addEventListener("click", function(){display("/");})
+
+        document.getElementById("equal").addEventListener("click", function(){display("=");})
+
+        document.getElementById("clear").addEventListener("click", function(){display("c");})
+    </script>
+</body>
+</html>
